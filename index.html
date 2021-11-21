@@ -40,10 +40,10 @@
         request.onload = function() {
             const data = JSON.parse(request.responseText);
 
-            selected_students = data.filter(getMajor);
-                function getMajor(student) {
+            const selected_students = data.filter(getMajor);
+            function getMajor(student) {
                 return student.major == selected_major;
-                }
+            }
         
             if(request.status == 200) {
                 const templateText = document.getElementById('studentData').innerHTML;
