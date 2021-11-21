@@ -40,15 +40,15 @@
         request.onload = function() {
             const data = JSON.parse(request.responseText);
 
-            selected_students = data.filter(getMajor)
+            const selected_students = data.filter(getMajor);
             function getMajor(student) {
                 return student.major == selected_major;
             }
         
             if(request.status == 200) {
                 const templateText = document.getElementById('tableTemplate').innerHTML;
-                const compliledTemplateText = Handlebars.compile(templateText);
-                compiledHTML = compliledTemplateText({rows: selected_students});
+                const compiledTemplateText = Handlebars.compile(templateText);
+                compiledHTML = compiledTemplateText({rows: selected_students});
                 document.getElementById('student_table').innerHTML = compiledHTML;
             }
             else{
