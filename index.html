@@ -46,7 +46,7 @@
             }
         
             if(request.status == 200) {
-                const templateText = document.getElementById('studentData').innerHTML;
+                const templateText = document.getElementById('tableTemplate').innerHTML;
                 const compliledTemplateText = Handlebars.compile(templateText);
                 compiledHTML = compliledTemplateText({rows: selected_students});
                 document.getElementById('student_table').innerHTML = compiledHTML;
