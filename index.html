@@ -40,7 +40,7 @@
         request.onload = function() {
             const data = JSON.parse(request.responseText);
 
-            const selected_students = data.filter(getMajor);
+            selected_students = data.filter(getMajor)
             function getMajor(student) {
                 return student.major == selected_major;
             }
