@@ -16,48 +16,53 @@
 <body>
     <!-- CIT 140 Project 5 Nov 21 2021 -->
     <div class="container">
-           <h1>Select a Major</h1>
-        <button type="button"class="btn btn-default" onclick="getStudents('CIT')">CIT Majors</button>
-        <button type="button" class="btn btn-default" onclick="getStudents('BUS')">Business Majors</button>
-        <div id="students"></div> 
-    <div id="student_table"></div>
+         <h1>Select a Major</h1>
+        <button type="button"class="btn btn-default" onClick="getStudents('CIT')">CIT Majors</button>
+        <button type="button" class="btn btn-default" onClick="getStudents('BUS')">Business Majors</button>
+        <div id="student_table"></div> 
     </div>
 </body>
-<script type="text/x-handlebars-template" id="tableTemplate">
-        <table class="table table-striped table-bordered">
-        <tr><th>Name</th><th>Major</th><th>Midterm</th><th>Final</th></tr>
-            {{#each rows}}
-            <tr><td>{{name}}</td><td>{{major}}</td><td>{{midterm}}</td><td>{{final}}</td></tr>
-            {{/each}}
-        </table>
     
+<!-- Handlebars Template -->
+<script type="text/x-handlebars-template" id="tableTemplate">
+
+   <table class="table table-striped table-bordered">
+       <tr><th>Name</th><th>Major</th><th>Midterm</th><th>Final</th></tr>
+           {{#each rows}}
+               <tr>
+                  <td>{{name}}</td><td>{{major}}</td><td>{{midterm}}</td><td>{{final}}</td>
+               </tr>
+           {{/each}}
+   </table>
 </script>
+    
+<!--Retrieve data  -->
 <script>
     function getStudents(selected_major){
-        const request = new XMLHttpRequest();
+        var request = new XMLHttpRequest();
         request.open('GET', 'cit5students.json');
 
         request.onload = function() {
-            const data = JSON.parse(request.responseText);
+            var data = JSON.parse(request.responseText);
 
-            const selected_students = data.filter(getMajor);
-            function getMajor(student) {
-                return student.major == selected_major;
-            }
+            selected_students = data.filter(getMajor)
+                function getMajor(student) {
+                    return student.major == selected_major;
+                }
         
             if(request.status == 200) {
-                const templateText = document.getElementById('tableTemplate').innerHTML;
-                const compiledTemplateText = Handlebars.compile(templateText);
-                const compiledHTML = compiledTemplateText({rows: selected_students});
+                var templateText = document.getElementById('tableTemplate').innerHTML;
+                var compiledTemplateText = Handlebars.compile(templateText);
+                compiledHTML = compiledTemplateText({rows: selected_students})
                 document.getElementById('student_table').innerHTML = compiledHTML;
             }
             else{
                 document.getElementById('student_table').innerHTML = "There was an error, or no students found";
             }
         }
-    }
-    request.send(null);
     
+    request.send(null);
+    }
 </script>
 
 </html>
